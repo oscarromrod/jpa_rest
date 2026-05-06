@@ -12,6 +12,7 @@ public class MesaRepository extends JpaRepository<Mesa, Long> {
         super(Mesa.class);
     }
 
+    //Devuelve las mesas de un restaurante
     public List<Mesa> findByRestaurante (Long restauranteId){
         EntityManager em = JpaUtil.createEntityManager();
         try {
