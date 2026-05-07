@@ -36,12 +36,12 @@ public class Reserva {
 
     private Double importeEstimado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mesa_id")
     @ToString.Exclude
     private Mesa mesa;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")
     @ToString.Exclude
     private Cliente cliente;
