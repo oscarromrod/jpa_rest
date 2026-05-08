@@ -127,10 +127,10 @@ public class Main {
             rs.getReservasPendientesHoy().forEach(IO::println);
 
             IO.println("=== CONSULTA 4: Recaudación total por restaurante ===");
-
+            rs.getRecaudacionPorRestaurante().forEach((k, v) -> IO.println(k + ": " + v));
 
             IO.println("=== CONSULTA 5: Restaurante con más mesas ===");
-
+            rs.getRestauranteConMasMesas().ifPresent(IO::println);
 
             IO.println("=== CONSULTA 6: Reservas canceladas o no presentadas ===");
 
