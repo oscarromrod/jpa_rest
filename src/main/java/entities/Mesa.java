@@ -43,7 +43,7 @@ public class Mesa {
         sb.append(id);
         sb.append(" | Mesa ").append(numero);
         sb.append(" | Capacidad:").append(capacidad);
-        sb.append(" | Terraza").append(terraza);
+        sb.append(" | Terraza: ").append(terraza);
         sb.append(" | ").append(restaurante.getNombre());
         return sb.toString();
     }

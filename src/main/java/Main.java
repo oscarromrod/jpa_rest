@@ -110,8 +110,6 @@ public class Main {
             reservaRepo.save(new Reserva(null, LocalDate.now(), LocalTime.now(), 8, EstadoReserva.PENDIENTE, 400.0, m12, c9));
             reservaRepo.save(new Reserva(null, LocalDate.now(), LocalTime.now(), 3, EstadoReserva.CONFIRMADA, 150.0, m3, c10));
 
-            lsajfhdjksfhkdjfhd
-
             em.getTransaction().commit();
             */
 
@@ -135,18 +133,19 @@ public class Main {
             rs.getRestauranteConMasMesas().ifPresent(IO::println);
 
             IO.println("=== CONSULTA 6: Reservas canceladas o no presentadas ===");
-
+            rs.getReservasProblematicas().forEach(IO::println);
 
             IO.println("=== CONSULTA 7: Número de reservas por ciudad ===");
-
+            rs.getReservasPorCiudad().forEach((ciudad, total) -> IO.println("Ciudad: " + ciudad + " | Total Reservas: " + total));
 
             IO.println("=== CONSULTA 8: Mesas más solicitadas ===");
-
+            rs.getMesasMasSolicitadas().forEach((mesa, total) -> IO.println(mesa + " | Total Reservas: " + total));
 
             IO.println("=== CONSULTA 9: Importe medio por reserva según terraza ===");
-
+            rs.getImporteMedioPorTerraza().forEach((ubicacion, promedio) -> IO.println(ubicacion + " | Importe Medio: " + promedio + "€"));
 
             IO.println("=== CONSULTA 10: Clientes frecuentes ===");
+            rs.getClientesFrecuentes(3).forEach(nombre -> IO.println("Cliente: " + nombre));
 
 
 

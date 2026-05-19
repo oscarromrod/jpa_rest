@@ -2,7 +2,7 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              version="3.2">
 
-    <persistence-unit name="srest-pu" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="dbrest" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>entities.Cliente</class>
         <class>entities.Mesa</class>
@@ -14,7 +14,7 @@
             <property name="jakarta.persistence.jdbc.driver"
                       value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/srest-pu"/>
+                      value="jdbc:mysql://localhost:3306/dbrest"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="Jaroso_26"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

@@ -96,20 +96,84 @@ public class ReservaServicio {
     /**
      * Listar las reservas con estado CANCELADA o NO_SHOW , ordenadas por fecha descendente.
      */
+    public List<Reserva> getReservasProblematicas() {
+        EntityManager em = JpaUtil.createEntityManager();
+        try {
+            return em.createQuery("SELECT r FROM Reserva r WHERE r.estado IN :estados ORDER BY r.fechaReserva DESC", Reserva.class)
+                    .setParameter("estados", List.of(EstadoReserva.CANCELADA, EstadoReserva.NO_SHOW))
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
     /**
      * Mostrar cuántas reservas existen agrupadas por ciudad del restaurante.
      */
+    public Map<String, Long> getReservasPorCiudad() {
+        EntityManager em = JpaUtil.createEntityManager();
+        try {
+            List<Object[]> resultados = em.createQuery("SELECT r.mesa.restaurante.ciudad, COUNT(r) FROM Reserva r GROUP BY r.mesa.restaurante.ciudad", Object[].class)
+                    .getResultList();
+
+            return resultados.stream()
+                    .collect(Collectors.toMap(fila -> (String) fila[0], fila -> (Long) fila[1]));
+        } finally {
+            em.close();
+        }
+    }
 
     /**
      * Detectar las mesas con más reservas registradas.
      */
+    public Map<Mesa, Long> getMesasMasSolicitadas() {
+        EntityManager em = JpaUtil.createEntityManager();
+        try {
+            List<Object[]> resultados = em.createQuery(
+                            "SELECT m, COUNT(r) FROM Reserva r JOIN r.mesa m GROUP BY m", Object[].class)
+                    .getResultList();
+
+            return resultados.stream()
+                    .sorted((a, b) -> ((Long) b[1]).compareTo((Long) a[1]))
+                    .collect(Collectors.toMap(fila -> (Mesa) fila[0], fila -> (Long) fila[1],(e1, e2) -> e1, LinkedHashMap::new));
+        } finally {
+            em.close();
+        }
+    }
 
     /**
      * Calcular el importe medio estimado de las reservas en mesas de terraza y en mesas interiores.
      */
+    public Map<String, Double> getImporteMedioPorTerraza() {
+        EntityManager em = JpaUtil.createEntityManager();
+        try {
+            List<Object[]> resultados = em.createQuery(
+                            "SELECT m.terraza, AVG(r.importeEstimado) FROM Reserva r JOIN r.mesa m GROUP BY m.terraza", Object[].class)
+                    .getResultList();
+
+            return resultados.stream()
+                    .collect(Collectors.toMap(fila -> (Boolean) fila[0] ? "Terraza" : "Interior", fila -> (Double) fila[1]));
+        } finally {
+            em.close();
+        }
+    }
 
     /**
      * Obtener los nombres de clientes con al menos minimoReservas reservas, sin repeticiones.
      */
+    public List<String> getClientesFrecuentes(int minimoReservas) {
+        EntityManager em = JpaUtil.createEntityManager();
+        try {
+            List<Cliente> clientes = em.createQuery("SELECT DISTINCT c FROM Cliente c JOIN c.reservas r", Cliente.class)
+                    .getResultList();
+
+            return clientes.stream()
+                    .filter(c -> c.getReservas().size() >= minimoReservas)
+                    .map(Cliente::getNombre)
+                    .distinct()
+                    .collect(Collectors.toList());
+        } finally {
+            em.close();
+        }
+    }
 }

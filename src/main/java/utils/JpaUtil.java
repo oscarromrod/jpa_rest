@@ -8,7 +8,7 @@ public class JpaUtil {
     private static final EntityManagerFactory emf;
     static {
         try {
-            emf = Persistence.createEntityManagerFactory("srest-pu");
+            emf = Persistence.createEntityManagerFactory("dbrest");
         } catch (Exception e) {
             throw new ExceptionInInitializerError("Error al iniciar JPA: " + e);
         }
