@@ -89,3 +89,5 @@ Ejemplo:
 - Esperar a que Maven descargue dependencias
 - Configurar MySQL
 - Ejecutar Main.java
+
+![img.png](img.png)
