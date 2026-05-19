@@ -110,6 +110,8 @@ public class Main {
             reservaRepo.save(new Reserva(null, LocalDate.now(), LocalTime.now(), 8, EstadoReserva.PENDIENTE, 400.0, m12, c9));
             reservaRepo.save(new Reserva(null, LocalDate.now(), LocalTime.now(), 3, EstadoReserva.CONFIRMADA, 150.0, m3, c10));
 
+            lsajfhdjksfhkdjfhd
+
             em.getTransaction().commit();
             */
 
