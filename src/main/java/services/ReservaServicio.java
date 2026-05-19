@@ -20,7 +20,7 @@ public class ReservaServicio {
     public List<Reserva> getReservasConfirmadas(){
         EntityManager em = JpaUtil.createEntityManager();
         try{
-            return em.createQuery("FROM Reserva r WHERE r.estado = :estado ORDER BY r.fechaReserva ASC", Reserva.class)
+            return em.createQuery("SELECT r FROM Reserva r JOIN FETCH r.cliente JOIN FETCH r.mesa m JOIN FETCH m.restaurante WHERE r.estado = :estado ORDER BY r.fechaReserva ASC", Reserva.class)
                     .setParameter("estado", EstadoReserva.CONFIRMADA)
                     .getResultList();
         } finally {
@@ -34,7 +34,7 @@ public class ReservaServicio {
     public List<Reserva> getReservasPorRestaurante(Long restauranteId){
         EntityManager em = JpaUtil.createEntityManager();
         try{
-            return em.createQuery("SELECT r FROM Reserva r JOIN r.mesa m JOIN m.restaurante restaurante WHERE restaurante.id = :idRestaurante", Reserva.class)
+            return em.createQuery("SELECT r FROM Reserva r JOIN FETCH r.cliente JOIN FETCH r.mesa m JOIN FETCH m.restaurante restaurante WHERE restaurante.id = :idRestaurante", Reserva.class)
                     .setParameter("idRestaurante", restauranteId)
                     .getResultList();
         }finally {
@@ -48,7 +48,7 @@ public class ReservaServicio {
     public List<Reserva> getReservasPendientesHoy(){
         EntityManager em = JpaUtil.createEntityManager();
         try{
-            return em.createQuery("SELECT r FROM Reserva r WHERE r.estado = :estado AND r.fechaReserva = :hoy", Reserva.class)
+            return em.createQuery("SELECT r FROM Reserva r JOIN FETCH r.cliente JOIN FETCH r.mesa m JOIN FETCH m.restaurante WHERE r.estado = :estado AND r.fechaReserva = :hoy", Reserva.class)
                     .setParameter("estado", EstadoReserva.PENDIENTE)
                     .setParameter("hoy", LocalDate.now())
                     .getResultList();
@@ -64,7 +64,7 @@ public class ReservaServicio {
     public Map<String, Double> getRecaudacionPorRestaurante(){
         EntityManager em = JpaUtil.createEntityManager();
         try{
-            List<Reserva> reservas = em.createQuery("SELECT r FROM Reserva r JOIN r.mesa m", Reserva.class)
+            List<Reserva> reservas = em.createQuery("SELECT r FROM Reserva r JOIN FETCH r.mesa m JOIN FETCH m.restaurante", Reserva.class)
                     .getResultList();
 
             return reservas.stream()
@@ -84,7 +84,7 @@ public class ReservaServicio {
     public Optional<Restaurante> getRestauranteConMasMesas() {
         EntityManager em = JpaUtil.createEntityManager();
         try {
-            return em.createQuery("SELECT r FROM Restaurante r ORDER BY SIZE(r.mesas) DESC", Restaurante.class)
+            return em.createQuery("SELECT r FROM Restaurante r LEFT JOIN FETCH r.mesas ORDER BY SIZE(r.mesas) DESC", Restaurante.class)
                     .setMaxResults(1)
                     .getResultStream()
                     .findFirst();
@@ -99,7 +99,7 @@ public class ReservaServicio {
     public List<Reserva> getReservasProblematicas() {
         EntityManager em = JpaUtil.createEntityManager();
         try {
-            return em.createQuery("SELECT r FROM Reserva r WHERE r.estado IN :estados ORDER BY r.fechaReserva DESC", Reserva.class)
+            return em.createQuery("SELECT r FROM Reserva r JOIN FETCH r.cliente JOIN FETCH r.mesa m JOIN FETCH m.restaurante WHERE r.estado IN :estados ORDER BY r.fechaReserva DESC", Reserva.class)
                     .setParameter("estados", List.of(EstadoReserva.CANCELADA, EstadoReserva.NO_SHOW))
                     .getResultList();
         } finally {
@@ -129,8 +129,7 @@ public class ReservaServicio {
     public Map<Mesa, Long> getMesasMasSolicitadas() {
         EntityManager em = JpaUtil.createEntityManager();
         try {
-            List<Object[]> resultados = em.createQuery(
-                            "SELECT m, COUNT(r) FROM Reserva r JOIN r.mesa m GROUP BY m", Object[].class)
+            List<Object[]> resultados = em.createQuery("SELECT m, COUNT(r) FROM Reserva r JOIN r.mesa m JOIN FETCH m.restaurante GROUP BY m", Object[].class)
                     .getResultList();
 
             return resultados.stream()
@@ -147,8 +146,7 @@ public class ReservaServicio {
     public Map<String, Double> getImporteMedioPorTerraza() {
         EntityManager em = JpaUtil.createEntityManager();
         try {
-            List<Object[]> resultados = em.createQuery(
-                            "SELECT m.terraza, AVG(r.importeEstimado) FROM Reserva r JOIN r.mesa m GROUP BY m.terraza", Object[].class)
+            List<Object[]> resultados = em.createQuery("SELECT m.terraza, AVG(r.importeEstimado) FROM Reserva r JOIN r.mesa m GROUP BY m.terraza", Object[].class)
                     .getResultList();
 
             return resultados.stream()
@@ -164,7 +162,7 @@ public class ReservaServicio {
     public List<String> getClientesFrecuentes(int minimoReservas) {
         EntityManager em = JpaUtil.createEntityManager();
         try {
-            List<Cliente> clientes = em.createQuery("SELECT DISTINCT c FROM Cliente c JOIN c.reservas r", Cliente.class)
+            List<Cliente> clientes = em.createQuery("SELECT DISTINCT c FROM Cliente c LEFT JOIN FETCH c.reservas r", Cliente.class)
                     .getResultList();
 
             return clientes.stream()

@@ -147,12 +147,6 @@ public class Main {
             IO.println("=== CONSULTA 10: Clientes frecuentes ===");
             rs.getClientesFrecuentes(3).forEach(nombre -> IO.println("Cliente: " + nombre));
 
-
-
-
-
-
-
         } catch (Exception e){
             em.getTransaction().rollback();
         } finally {
