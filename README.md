@@ -82,3 +82,10 @@ Ejemplo:
 <property name="jakarta.persistence.jdbc.user" value="root"/>
 <property name="jakarta.persistence.jdbc.password" value="1234"/>
 ```
+
+# Ejecución del proyecto
+- Desde IntelliJ IDEA
+- Abrir el proyecto Maven
+- Esperar a que Maven descargue dependencias
+- Configurar MySQL
+- Ejecutar Main.java
