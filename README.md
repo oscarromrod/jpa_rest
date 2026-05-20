@@ -26,7 +26,7 @@ El proyecto permite gestionar:
 
 # Tecnologías utilizadas
 
-- Java 21
+- Java 25
 - Maven
 - Hibernate ORM 7
 - Jakarta Persistence API 3.2
