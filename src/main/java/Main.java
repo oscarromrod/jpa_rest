@@ -136,13 +136,13 @@ public class Main {
             rs.getReservasProblematicas().forEach(IO::println);
 
             IO.println("=== CONSULTA 7: Número de reservas por ciudad ===");
-            rs.getReservasPorCiudad().forEach((ciudad, total) -> IO.println("Ciudad: " + ciudad + " | Total Reservas: " + total));
+            rs.getReservasPorCiudad().forEach((k, v) -> IO.println(k + " -> " + v + "reservas"));
 
             IO.println("=== CONSULTA 8: Mesas más solicitadas ===");
-            rs.getMesasMasSolicitadas().forEach((mesa, total) -> IO.println(mesa + " | Total Reservas: " + total));
+            rs.getMesasMasSolicitadas().forEach((k, v) -> IO.println(k + " | Total Reservas: " + v));
 
             IO.println("=== CONSULTA 9: Importe medio por reserva según terraza ===");
-            rs.getImporteMedioPorTerraza().forEach((ubicacion, promedio) -> IO.println(ubicacion + " | Importe Medio: " + promedio + "€"));
+            rs.getImporteMedioPorTerraza().forEach((k, v) -> IO.println(k + " | Importe Medio: " + v + "€"));
 
             IO.println("=== CONSULTA 10: Clientes frecuentes ===");
             rs.getClientesFrecuentes(3).forEach(nombre -> IO.println("Cliente: " + nombre));

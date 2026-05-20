@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public class ReservaServicio {
 
+    //Para solucionar el problema del fetch.LAZY he encontrado una solución poniendo JOIN FETCH en las consultas que considero que es necesario.
+
     /**
      * Listar todas las reservas con estado CONFIRMADA , ordenadas por fecha ascendente.
      * @return
