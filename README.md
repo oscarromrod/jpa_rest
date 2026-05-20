@@ -52,6 +52,10 @@ proyecto-jpa-restaurantes/
             └── Main.java
 ```
 
+![img.png](img.png)
+
+---
+
 # Configuración de MySQL
 
 ## 1. Crear la base de datos
@@ -89,5 +93,3 @@ Ejemplo:
 - Esperar a que Maven descargue dependencias
 - Configurar MySQL
 - Ejecutar Main.java
-
-![img.png](img.png)
