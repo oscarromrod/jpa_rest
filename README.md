@@ -26,7 +26,7 @@ El proyecto permite gestionar:
 
 # Tecnologías utilizadas
 
-- Java 21
+- Java 25
 - Maven
 - Hibernate ORM 7
 - Jakarta Persistence API 3.2
@@ -51,6 +51,10 @@ proyecto-jpa-restaurantes/
             ├── utils/
             └── Main.java
 ```
+
+![img.png](img.png)
+
+---
 
 # Configuración de MySQL
 
@@ -89,5 +93,3 @@ Ejemplo:
 - Esperar a que Maven descargue dependencias
 - Configurar MySQL
 - Ejecutar Main.java
-
-![img.png](img.png)
