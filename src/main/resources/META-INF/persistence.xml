@@ -6,7 +6,6 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>entities.Cliente</class>
         <class>entities.Mesa</class>
-        <class>entities.Cliente</class>
         <class>entities.Reserva</class>
         <class>entities.Restaurante</class>
 
