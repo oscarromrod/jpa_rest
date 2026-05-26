@@ -128,19 +128,6 @@ public class ReservaServicio {
     /**
      * Detectar las mesas con más reservas registradas.
      */
-    public Map<Mesa, Long> getMesasMasSolicitadas() {
-        EntityManager em = JpaUtil.createEntityManager();
-        try {
-            List<Object[]> resultados = em.createQuery("SELECT m, COUNT(r) FROM Reserva r JOIN r.mesa m JOIN FETCH m.restaurante GROUP BY m", Object[].class)
-                    .getResultList();
-
-            return resultados.stream()
-                    .sorted((a, b) -> ((Long) b[1]).compareTo((Long) a[1]))
-                    .collect(Collectors.toMap(fila -> (Mesa) fila[0], fila -> (Long) fila[1],(e1, e2) -> e1, LinkedHashMap::new));
-        } finally {
-            em.close();
-        }
-    }
 
     /**
      * Calcular el importe medio estimado de las reservas en mesas de terraza y en mesas interiores.
