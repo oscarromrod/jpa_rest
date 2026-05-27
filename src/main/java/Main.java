@@ -139,7 +139,6 @@ public class Main {
             rs.getReservasPorCiudad().forEach((k, v) -> IO.println(k + " -> " + v + "reservas"));
 
             IO.println("=== CONSULTA 8: Mesas más solicitadas ===");
-            rs.getMesasMasSolicitadas().forEach((k, v) -> IO.println(k + " | Total Reservas: " + v));
 
             IO.println("=== CONSULTA 9: Importe medio por reserva según terraza ===");
             rs.getImporteMedioPorTerraza().forEach((k, v) -> IO.println(k + " | Importe Medio: " + v + "€"));
